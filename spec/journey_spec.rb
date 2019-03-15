@@ -31,5 +31,29 @@ describe Journey do
     expect(journey).to_not be_in_journey
   end
 
+  it { is_expected.to respond_to(:complete?) }
+
+  it "should return true if exit_station and entry_station is not nil" do
+    journey.start(entry_station)
+    journey.finish(exit_station)
+    expect(journey).to be_complete
+  end
+
+  it "should return false if either station is not nil" do
+    journey.start(entry_station)
+    expect(journey).to_not be_complete
+  end
+
+  it { is_expected.to respond_to(:fare) }
+
+  it "has a penalty fare by default" do
+    expect(journey.fare).to eq Journey::PENALTY_FARE
+  end
+
+  it "should return the minimum if journey is complete" do
+    journey.start(entry_station)
+    journey.finish(exit_station)
+    expect(journey.fare).to eq Oystercard::MINIMUM_FARE
+  end
 
 end

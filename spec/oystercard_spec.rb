@@ -68,4 +68,7 @@ describe Oystercard do
     card.touch_out(exit_station)
     expect(card.journey_list).to include journey
   end
+
+
+
 end

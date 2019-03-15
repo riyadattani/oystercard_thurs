@@ -4,6 +4,7 @@ class Oystercard
   attr_reader :balance, :journey_list
   DEFAULT_LIMIT = 90
   MINIMUM = 1
+  MINIMUM_FARE = 1
 
   def initialize(journey = Journey)
     @balance = 0
@@ -25,13 +26,8 @@ class Oystercard
   end
 
   def touch_out(exit_station)
-    @journey_list.each do |journey|
-      if journey.in_journey? == true
-        journey.finish(exit_station)
-      end
-    end
-
-    deduct(MINIMUM)
+    @journey_list.each {|journey| journey.finish(exit_station) if journey.in_journey? == true }
+    deduct(MINIMUM_FARE)
   end
 
   private
